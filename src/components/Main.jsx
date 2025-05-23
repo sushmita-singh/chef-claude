@@ -1,7 +1,6 @@
 import { useState } from "react"
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
-import {getRecipeFromMistral} from "../api"
 
 export default function Main() {
     const [ingredients, setIngredients] = useState([])
@@ -20,8 +19,12 @@ export default function Main() {
     async function getRecipe() {
         setLoading(true); // Set loading to true when API call starts
         try {
-            const recipeMarkdown = await getRecipeFromMistral(ingredients);
-            setRecipe(recipeMarkdown);
+            const response = await fetch("/.netlify/functions/getRecipe", {
+                method: "POST",
+                body: JSON.stringify({ ingredientsArr: ingredients }),
+              });
+              const data = await response.json();
+              setRecipe(data.recipe);              
         } catch (error) {
             console.error("Error fetching recipe:", error);
         } finally {
