@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, useEffect, useRef } from "react"
 import IngredientsList from "./IngredientsList"
 import ClaudeRecipe from "./ClaudeRecipe"
 
@@ -6,7 +6,13 @@ export default function Main() {
     const [ingredients, setIngredients] = useState([])
     const [recipe, setRecipe] = useState("")
     const [loading, setLoading] = useState(false); // Add loading state
-
+    const recipeSection = useRef(null)
+    
+    useEffect(() => {
+        if (recipe !== "" && recipeSection.current !== null) {
+            recipeSection.current.scrollIntoView({behavior: "smooth"})
+        }
+    }, [recipe])
 
     // Function to handle form submission
     function addToIngredidentList(formData) {
@@ -51,6 +57,7 @@ export default function Main() {
                     ingredients={ingredients}
                     getRecipe={getRecipe}
                     loading={loading}
+                    ref={recipeSection}
                 />
             }
 

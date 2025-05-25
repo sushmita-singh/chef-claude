@@ -13,7 +13,7 @@ export default function IngredientsList(props) {
 
             {props.ingredients.length > 3 &&
             // Only show the accent container if there are more than 3 ingredients
-                <div className="accent-container">
+                <div className="accent-container" ref={props.ref}>
                     <span className="accent-primary-container">
                         <h3 className="accent-title">Ready for a recipe?</h3>
                         <p className="accent-text">Generate a recipe from your list of ingredients.</p>
